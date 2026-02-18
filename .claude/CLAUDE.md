@@ -50,3 +50,7 @@ The author has React experience but no mobile dev experience. A PWA gives mobile
 - The author lives in an apartment complex — they are their own first user
 - The property manager has been consulted and is receptive
 - The property manager relationship is both a distribution channel and a legitimacy signal
+
+## Session History
+
+Check `.claude/sessions/` for chronological session logs. Read the most recent one(s) to pick up context from prior conversations.
