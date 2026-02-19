@@ -5,13 +5,13 @@ cabal-version: 2.2
 -- see: https://github.com/sol/hpack
 
 name:           village
-version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/githubuser/village#readme>
-homepage:       https://github.com/githubuser/village#readme
-bug-reports:    https://github.com/githubuser/village/issues
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2026 Author name here
+version:        0.0.0.0
+description:    Please see the README on GitHub at <https://github.com/OlaoluwaM/village#readme>
+homepage:       https://github.com/OlaoluwaM/village#readme
+bug-reports:    https://github.com/OlaoluwaM/village/issues
+author:         Olaoluwa Mustapha
+maintainer:     Olaoluwa Mustapha <olaolum@pm.me>
+copyright:      2026 Olaoluwa Mustapha
 license:        BSD-3-Clause
 license-file:   LICENSE
 build-type:     Simple
@@ -21,11 +21,12 @@ extra-source-files:
 
 source-repository head
   type: git
-  location: https://github.com/githubuser/village
+  location: https://github.com/OlaoluwaM/village
 
 library
   exposed-modules:
-      Lib
+      Village.Api
+      Village.Endpoints.Ping.Handler
   other-modules:
       Paths_village
   autogen-modules:
@@ -61,7 +62,24 @@ library
       TypeFamilies
   ghc-options: -Wall -Wmissing-export-lists -Wmissing-deriving-strategies -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -Wno-unused-top-binds
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , attoparsec
+    , base >=4.7 && <5
+    , bytestring
+    , containers
+    , effectful
+    , effectful-th
+    , pretty-simple
+    , servant-server
+    , string-interpolate
+    , text
+    , time
+    , transformers
+    , unordered-containers
+    , vector
+    , wai
+    , wai-logger
+    , warp
   default-language: GHC2021
 
 executable village-exe
@@ -101,8 +119,25 @@ executable village-exe
       TypeFamilies
   ghc-options: -Wall -Wmissing-export-lists -Wmissing-deriving-strategies -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -Wno-unused-top-binds -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , attoparsec
+    , base >=4.7 && <5
+    , bytestring
+    , containers
+    , effectful
+    , effectful-th
+    , pretty-simple
+    , servant-server
+    , string-interpolate
+    , text
+    , time
+    , transformers
+    , unordered-containers
+    , vector
     , village
+    , wai
+    , wai-logger
+    , warp
   default-language: GHC2021
 
 test-suite village-test
@@ -143,6 +178,23 @@ test-suite village-test
       TypeFamilies
   ghc-options: -Wall -Wmissing-export-lists -Wmissing-deriving-strategies -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -Wno-unused-top-binds -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , attoparsec
+    , base >=4.7 && <5
+    , bytestring
+    , containers
+    , effectful
+    , effectful-th
+    , pretty-simple
+    , servant-server
+    , string-interpolate
+    , text
+    , time
+    , transformers
+    , unordered-containers
+    , vector
     , village
+    , wai
+    , wai-logger
+    , warp
   default-language: GHC2021
