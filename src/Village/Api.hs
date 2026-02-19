@@ -1,6 +1,6 @@
 module Village.Api (villageApi) where
 
-import Data.Data (Proxy (..))
+import Data.Proxy (Proxy (..))
 
 import Network.Wai qualified
 import Servant (serve)
