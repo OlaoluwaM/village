@@ -13,11 +13,7 @@ author:         Olaoluwa Mustapha
 maintainer:     Olaoluwa Mustapha <olaolum@pm.me>
 copyright:      2026 Olaoluwa Mustapha
 license:        BSD-3-Clause
-license-file:   LICENSE
 build-type:     Simple
-extra-source-files:
-    README.md
-    CHANGELOG.md
 
 source-repository head
   type: git
