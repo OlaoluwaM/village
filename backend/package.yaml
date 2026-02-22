@@ -6,9 +6,7 @@ author: "Olaoluwa Mustapha"
 maintainer: "Olaoluwa Mustapha <olaolum@pm.me>"
 copyright: "2026 Olaoluwa Mustapha"
 
-extra-source-files:
-  - README.md
-  - CHANGELOG.md
+# extra-source-files:
 
 # Metadata used when publishing your package
 # synopsis:            Short description of your package
