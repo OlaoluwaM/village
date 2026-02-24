@@ -1,0 +1,17 @@
+services:
+
+  db:
+    image: postgres:16
+    container_name: village-database
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      # We are saying the docker volume "postgres-data" should be mounted at the path "/var/lib/postgresql/data" in the container. This is where our postgres data will be stored. By using a volume, we ensure that our data persists across container restarts and removals. Something to note, the path "/var/lib/postgresql/data" is the default data directory for PostgreSQL in the official Docker image.
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data: # Here we are declaring the volume for our postgres service. It looks empty but all we're doing is registering the volume name. Docker handles the rest from there
