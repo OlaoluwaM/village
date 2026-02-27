@@ -3,7 +3,6 @@ set dotenv-load := true
 # Just will fail if there is no .env file available
 set dotenv-required := true
 
-project_root := justfile_directory()
 
 db_port := env('POSTGRES_PORT', '5432')
 db_username := env('POSTGRES_USER', '')
@@ -17,13 +16,22 @@ test_db_password := env('TEST_POSTGRES_PASSWORD', '')
 test_db_database_name := env('TEST_POSTGRES_DB', '')
 test_db_connection_string := f'db:pg://{{test_db_username}}:{{test_db_password}}@localhost:{{test_db_port}}/{{test_db_database_name}}'
 
-[positional-arguments]
-sqitch *args='':
-  {{project_root}}/docker_sqitch.sh "$@" {{ db_connection_string }}
+[positional-arguments, private]
+docker_sqitch *args='':
+  #!/usr/bin/env bash
+  # This script allows us run sqitch in a docker container, so we don't have to install it on our local machine.
+  docker run -it --rm --network host \
+  	-v "$(pwd)/db/sqitch:/repo" \
+  	-u "$(id -u ${USER}):$(id -g ${USER})" \
+  	"${passopt[@]}" sqitch/sqitch "$@"
 
 [positional-arguments]
-sqitch_test *args='':
-  {{project_root}}/docker_sqitch.sh "$@" {{ test_db_connection_string }}
+@sqitch *args='':
+  just docker_sqitch "$@" {{ db_connection_string }}
+
+[positional-arguments]
+@sqitch_test *args='':
+  just docker_sqitch "$@" {{ test_db_connection_string }}
 
 # Local DB recipes
 
