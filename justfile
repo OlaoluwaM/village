@@ -49,6 +49,9 @@ reset_db:
   docker compose down --volumes db # Remove the db container with its volume
   just start_db
 
+db_ui:
+  harlequin --theme catppuccin-mocha -a postgres 'postgres://{{db_username}}:{{db_password}}@localhost:{{db_port}}/{{db_database_name}}'
+
 
 # Test recipes
 
@@ -65,3 +68,6 @@ stop_test_db:
 reset_test_db:
   docker compose down --volumes test_db
   just start_test_db
+
+test_db_ui:
+  harlequin --theme catppuccin-mocha -a postgres 'postgres://{{test_db_username}}:{{test_db_password}}@localhost:{{test_db_port}}/{{test_db_database_name}}'
