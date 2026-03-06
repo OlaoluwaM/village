@@ -1,4 +1,4 @@
-module Village.Endpoints.Ping.Handler (PingAPI, pingServer) where
+module Village.Ping.Handler (PingAPI, pingServer) where
 
 import Servant
 

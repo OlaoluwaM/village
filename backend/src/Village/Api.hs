@@ -4,7 +4,7 @@ import Data.Proxy (Proxy (..))
 
 import Network.Wai qualified
 import Servant (serve)
-import Village.Endpoints.Ping.Handler (PingAPI, pingServer)
+import Village.Ping.Handler (PingAPI, pingServer)
 
 type VillageAPI = PingAPI
 

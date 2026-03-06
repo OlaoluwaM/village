@@ -22,7 +22,7 @@ source-repository head
 library
   exposed-modules:
       Village.Api
-      Village.Endpoints.Ping.Handler
+      Village.Ping.Handler
   other-modules:
       Paths_village
   autogen-modules:
@@ -65,6 +65,9 @@ library
     , containers
     , effectful
     , effectful-th
+    , esqueleto
+    , persistent
+    , persistent-template
     , pretty-simple
     , servant-server
     , string-interpolate
