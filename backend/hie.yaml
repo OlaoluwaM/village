@@ -1,0 +1,10 @@
+cradle:
+  stack:
+    - path: "./src"
+      component: "village:lib"
+
+    - path: "./app/Main.hs"
+      component: "village:exe:village-exe"
+
+    - path: "./test"
+      component: "village:test:village-test"
