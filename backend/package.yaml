@@ -19,14 +19,18 @@ description: Please see the README on GitHub at <https://github.com/OlaoluwaM/vi
 
 language: GHC2021
 dependencies:
-  - base >= 4.7 && < 5
   - aeson
   - attoparsec
+  - base >= 4.7 && < 5
   - bytestring
+  - Blammo
+  - Blammo-wai
   - containers
   - effectful
   - effectful-th
   - pretty-simple
+  - persistent
+  - persistent-postgresql # Requires that the libpq and libpq-devel system packages are installed
   - string-interpolate
   - servant-server
   - text
@@ -35,7 +39,6 @@ dependencies:
   - vector
   - unordered-containers
   - wai
-  - wai-logger
   - warp
 
 default-extensions:
@@ -82,9 +85,11 @@ ghc-options:
 library:
   source-dirs: src
   dependencies:
-    - persistent
-    - persistent-template
+    - dotenv
+    - envparse
     - esqueleto
+    - persistent-template
+    - resourcet
 
 executables:
   village-exe:

@@ -1,13 +1,28 @@
-module Village.Ping.Handler (PingAPI, pingServer) where
+module Village.Ping.Handler (PingApi, pingHandler) where
 
+import Database.Esqueleto.Experimental
 import Servant
 
-type PingAPI = RootAPI :<|> ("ping" :> Get '[JSON] NoContent)
-type RootAPI = Get '[JSON] NoContent
+import Effectful qualified as Eff
+import Effectful.Error.Static qualified as Eff
+import Effectful.Exception qualified as Eff
 
--- TODO: Extend this to also check DB status with a dummy query, something like SELECT 1
-pingServer :: Server PingAPI
-pingServer = ping :<|> ping
+import Control.Exception (displayException)
+import Data.Functor (($>))
+import Data.String (fromString)
+import Data.Text (Text)
+import Effectful (Eff)
+import Village.Effects.DB (DB, db)
 
-ping :: Handler NoContent
-ping = pure NoContent
+type PingEff es = (Eff.IOE Eff.:> es, Eff.Error ServerError Eff.:> es, DB Eff.:> es)
+
+type PingApi = RootApi :<|> ("ping" :> Get '[JSON] Text)
+type RootApi = Get '[JSON] Text
+
+pingHandler :: (PingEff es) => ServerT PingApi (Eff es)
+pingHandler = ping :<|> ping
+
+ping :: (PingEff es) => Eff es Text
+ping = do
+    let dbCheck = db (rawSql @(Single Int) "SELECT 1" []) $> "Ok"
+    dbCheck `Eff.catchSync` (\err -> Eff.throwError $ err500{errBody = "Error " <> fromString (displayException err)})

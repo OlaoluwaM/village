@@ -1,6 +1,6 @@
 cabal-version: 2.2
 
--- This file has been generated from package.yaml by hpack version 0.38.1.
+-- This file has been generated from package.yaml by hpack version 0.39.1.
 --
 -- see: https://github.com/sol/hpack
 
@@ -22,6 +22,10 @@ source-repository head
 library
   exposed-modules:
       Village.Api
+      Village.App
+      Village.Auth.Resident
+      Village.Configuration
+      Village.Effects.DB
       Village.Ping.Handler
   other-modules:
       Paths_village
@@ -58,17 +62,23 @@ library
       TypeFamilies
   ghc-options: -Wall -Wmissing-export-lists -Wmissing-deriving-strategies -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -Wno-unused-top-binds
   build-depends:
-      aeson
+      Blammo
+    , Blammo-wai
+    , aeson
     , attoparsec
     , base >=4.7 && <5
     , bytestring
     , containers
+    , dotenv
     , effectful
     , effectful-th
+    , envparse
     , esqueleto
     , persistent
+    , persistent-postgresql
     , persistent-template
     , pretty-simple
+    , resourcet
     , servant-server
     , string-interpolate
     , text
@@ -77,7 +87,6 @@ library
     , unordered-containers
     , vector
     , wai
-    , wai-logger
     , warp
   default-language: GHC2021
 
@@ -118,13 +127,17 @@ executable village-exe
       TypeFamilies
   ghc-options: -Wall -Wmissing-export-lists -Wmissing-deriving-strategies -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -Wno-unused-top-binds -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      aeson
+      Blammo
+    , Blammo-wai
+    , aeson
     , attoparsec
     , base >=4.7 && <5
     , bytestring
     , containers
     , effectful
     , effectful-th
+    , persistent
+    , persistent-postgresql
     , pretty-simple
     , servant-server
     , string-interpolate
@@ -135,7 +148,6 @@ executable village-exe
     , vector
     , village
     , wai
-    , wai-logger
     , warp
   default-language: GHC2021
 
@@ -177,13 +189,17 @@ test-suite village-test
       TypeFamilies
   ghc-options: -Wall -Wmissing-export-lists -Wmissing-deriving-strategies -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -Wno-unused-top-binds -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      aeson
+      Blammo
+    , Blammo-wai
+    , aeson
     , attoparsec
     , base >=4.7 && <5
     , bytestring
     , containers
     , effectful
     , effectful-th
+    , persistent
+    , persistent-postgresql
     , pretty-simple
     , servant-server
     , string-interpolate
@@ -194,6 +210,5 @@ test-suite village-test
     , vector
     , village
     , wai
-    , wai-logger
     , warp
   default-language: GHC2021
