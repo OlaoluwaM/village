@@ -1,5 +1,4 @@
 -- To massage our Api definition into an application we can execute
-{-# LANGUAGE ScopedTypeVariables #-}
 
 module Village.App (runApp) where
 
@@ -48,7 +47,7 @@ runApp = do
         let appSettings = Settings pool logger appCtx
         lift $ runSettings settings . middleware $ mkApi appSettings
 
-mkApi :: Settings -> Network.Wai.Application
+mkApi :: Settings -> Application
 mkApi settings = serve api $ hoistServer api (effToHandler settings) handler
 
 effToHandler :: forall a. Settings -> ApiEff a -> Handler a

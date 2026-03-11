@@ -4,7 +4,6 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE UndecidableInstances #-}
-
 {-# OPTIONS_GHC -Wno-missing-export-lists #-}
 
 module Village.Auth.Resident where
@@ -18,6 +17,6 @@ mkPersist
     [persistLowerCase|
 Resident
     username Text
-    created_at UTCTime
+    createdAt UTCTime
     deriving Show
 |]

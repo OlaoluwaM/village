@@ -29,7 +29,7 @@ docker_sqitch *args='':
   docker run -it --rm --network host \
   	-v "$(pwd)/db/sqitch:/repo" \
   	-u "$(id -u):$(id -g)" \
-  	"${passopt[@]}" sqitch/sqitch "$@"
+  	sqitch/sqitch "$@"
 
 [positional-arguments]
 @sqitch *args='':
