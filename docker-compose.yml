@@ -1,7 +1,7 @@
 services:
 
-  # It looks like variable interpolation doesn't get namespaced under the provided .env file, so we can't have both the env_file and environment options with interpolations on the latter since the variables used in the subsitutions won't be sourced from the associated .env file, but rather will be sourced from the shell and *the* .env files.
-  # So we have to define all the variables for the target servce in their associated .env file or have prefixed versions in a single .env file. As you'll see, we went with the former approach, having separate .env files for each relevant service, though this means the ports need to be hardcoded.
+  # It looks like variable interpolation doesn't get namespaced under the provided .env file, so we can't have both the env_file and environment options with interpolations on the latter since the variables used in the substitutions won't be sourced from the associated .env file, but rather will be sourced from the shell and *the* .env files.
+  # So we have to define all the variables for the target service in their associated .env file or have prefixed versions in a single .env file. As you'll see, we went with the former approach, having separate .env files for each relevant service, though this means the ports need to be hardcoded.
   # Changes to the port must be propagated to the justfile and the associated .env file for that service. A tradeoff, but it keeps things more organized and modular, which is nice.
   db:
     image: postgres:16

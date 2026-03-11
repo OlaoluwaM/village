@@ -14,7 +14,7 @@ db_password := env('POSTGRES_PASSWORD', '')
 db_database_name := env('POSTGRES_DB', '')
 db_connection_string := f'db:pg://{{db_username}}:{{db_password}}@localhost:{{db_port}}/{{db_database_name}}'
 
-# The .env file no longer contains test specific env variables, those have been moved .env.test. Why? For code reuse. By moving the test variables into their own .env.test file we can reuse the same names as what we have in .env meaning our code to load the variables won't need to change between environments. The only issue with this is justfiles don't support loading multiple .env files hence, we must resort to a bit of duplication, copying the env values in .env.test here so the recipes defined here for testing can keep working. I considered going down the module approach, create a separate just module for test recipes but just doesn't support loading different .env files across modules either. I could also create a totally separate justfile just for test recipes, but that would result in much more duplication than what we have here.
+# The .env file no longer contains test-specific env variables; those have been moved to .env.test. Why? For code reuse. By moving the test variables into their own .env.test file, we can reuse the same names as what we have in .env, meaning our code to load the variables won't need to change between environments. The only issue with this is Justfiles don't support loading multiple .env files, so we must resort to a bit of duplication, copying the env values in .env.test here so the recipes defined here for testing can keep working. I considered going down the module approach, creating a separate Just module for test recipes, but Just doesn't support loading different .env files across modules either. I could also create a totally separate justfile just for test recipes, but that would result in much more duplication than what we have here.
 # REMEMBER TO UPDATE THESE VALUES AS .env.test CHANGES
 test_db_port := '5433'
 test_db_username := 'village_test'
@@ -25,7 +25,7 @@ test_db_connection_string := f'db:pg://{{test_db_username}}:{{test_db_password}}
 [positional-arguments, private]
 docker_sqitch *args='':
   #!/usr/bin/env bash
-  # This script allows us run sqitch in a docker container, so we don't have to install it on our local machine.
+  # This script allows us to run sqitch in a docker container, so we don't have to install it on our local machine.
   docker run -it --rm --network host \
   	-v "$(pwd)/db/sqitch:/repo" \
   	-u "$(id -u):$(id -g)" \

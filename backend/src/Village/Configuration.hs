@@ -28,8 +28,7 @@ loadAppConfig = do
     environment <- Env.parse (Env.header "Village API ENV") $ Env.var (Env.eitherReader @Env.Error parseEnvVar) "ENV" (Env.def DEV)
 
     -- env vars in .env are the vars our application needs to run. These are the prod env vars. Everything prod related is required and must be defined within it
-    -- dev and test should provide appropriate mock/default values for each of these. We can have .env service dev and prod environments because we can just modify the env
-    -- values at production deploy time for prod
+    -- dev and test should provide appropriate mock/default values for each of these. We can have the `.env` file service both dev and prod environments because we can just modify the env vars depending on the environment we're running in. Swap in values for prod at deploy time
     -- Ensure that everything listed in .env.example is defined in .env and .env.test
     let dotenvConfig = Dotenv.defaultConfig{Dotenv.configExamplePath = [".env.example"]}
 
