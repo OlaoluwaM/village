@@ -52,11 +52,15 @@ restart_db:
   docker compose restart db
 
 reset_db:
-  docker compose rm --stop --force -v db # Remove the db container
+  just clean_and_stop_db
   just start_db
 
 stop_db:
   docker compose stop db # Just stop the db container
+
+clean_and_stop_db:
+  just revert_db
+  docker compose rm --stop --force -v db # Remove the db container
 
 db_ui:
   rainfrog  --url 'postgres://{{db_username}}:{{db_password}}@localhost:{{db_port}}/{{db_database_name}}'
@@ -78,11 +82,15 @@ restart_test_db:
   docker compose restart test_db
 
 reset_test_db:
-  docker compose rm --stop --force -v test_db
+  just clean_and_stop_test_db
   just start_test_db
 
 stop_test_db:
   docker compose stop test_db
+
+clean_and_stop_test_db:
+  just revert_test_db
+  docker compose rm --stop --force -v test_db # Remove the db container
 
 test_db_ui:
   rainfrog  --url 'postgres://{{test_db_username}}:{{test_db_password}}@localhost:{{test_db_port}}/{{test_db_database_name}}'

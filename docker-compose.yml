@@ -22,6 +22,8 @@ services:
       POSTGRES_USER: ${TEST_POSTGRES_USER}
       POSTGRES_PASSWORD: ${TEST_POSTGRES_PASSWORD}
       POSTGRES_DB: ${TEST_POSTGRES_DB}
+    env_file:
+      - .env.test
     ports:
       - "${TEST_POSTGRES_PORT}:5432"
     volumes:
