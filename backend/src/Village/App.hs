@@ -28,6 +28,7 @@ import Servant (
     serve,
  )
 import Village.Effects.DB (runDB)
+import Village.Effects.Log (runLog)
 
 data Settings = Settings
     { dbConnPool :: ConnectionPool
@@ -51,4 +52,11 @@ mkApi :: Settings -> Network.Wai.Application
 mkApi settings = serve api $ hoistServer api (effToHandler settings) handler
 
 effToHandler :: forall a. Settings -> ApiEff a -> Handler a
-effToHandler Settings{dbConnPool, logger, appCtx} = Handler . ExceptT . runEff . runReader appCtx . runDB logger dbConnPool . runErrorNoCallStack
+effToHandler Settings{dbConnPool, logger, appCtx} =
+    Handler
+        . ExceptT
+        . runEff
+        . runReader appCtx
+        . runDB logger dbConnPool
+        . runErrorNoCallStack
+        . runLog logger

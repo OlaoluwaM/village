@@ -12,9 +12,10 @@ import Servant (
  )
 import Village.Configuration (AppCtx)
 import Village.Effects.DB (DB)
+import Village.Effects.Log (Log)
 import Village.Ping.Handler (PingApi, pingHandler)
 
-type ApiEff = Eff '[Error ServerError, DB, Reader AppCtx, IOE]
+type ApiEff = Eff '[Log, Error ServerError, DB, Reader AppCtx, IOE]
 
 type Api = PingApi
 

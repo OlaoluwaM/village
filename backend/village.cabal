@@ -26,6 +26,7 @@ library
       Village.Auth.Resident
       Village.Configuration
       Village.Effects.DB
+      Village.Effects.Log
       Village.Ping.Handler
   other-modules:
       Paths_village
