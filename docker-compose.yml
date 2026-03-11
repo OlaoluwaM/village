@@ -1,15 +1,18 @@
 services:
 
+  # It looks like variable interpolation doesn't get namespaced under the provided .env file, so we can't have both the env_file and environment options with interpolations on the latter since the variables used in the subsitutions won't be sourced from the associated .env file, but rather will be sourced from the shell and *the* .env files.
+  # So we have to define all the variables for the target servce in their associated .env file or have prefixed versions in a single .env file. As you'll see, we went with the former approach, having separate .env files for each relevant service, though this means the ports need to be hardcoded.
+  # Changes to the port must be propagated to the justfile and the associated .env file for that service. A tradeoff, but it keeps things more organized and modular, which is nice.
   db:
     image: postgres:16
     container_name: village_database
-    environment:
-      # At initial container startup, the offical postgres image will look for these environment varuables to create a new database (POSTGRES_DB) and a new superuser (POSTGRES_USER) with the specified password (POSTGRES_PASSWORD). So long as the associated volume isn't deleted, these values/configuration will persist across container restarts. If we didn't supply these environment variables, then the postgres image would use default values such as POSTGRES_USER=postgres, POSTGRES_PASSWORD=postgres, and POSTGRES_DB=postgres
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+    env_file:
+      - path: ./backend/.env
+        required: true
+      - path: ./backend/.env.dev
+        required: false
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "5432:5432"
     volumes:
       # We are saying the docker volume "postgres-data" should be mounted at the path "/var/lib/postgresql/data" in the container. This is where our postgres data will be stored. By using a volume, we ensure that our data persists across container restarts and removals. Something to note, the path "/var/lib/postgresql/data" is the default data directory for PostgreSQL in the official Docker image.
       - postgres_data:/var/lib/postgresql/data
@@ -18,14 +21,11 @@ services:
   test_db:
     image: postgres:16
     container_name: village_test_database
-    environment:
-      POSTGRES_USER: ${TEST_POSTGRES_USER}
-      POSTGRES_PASSWORD: ${TEST_POSTGRES_PASSWORD}
-      POSTGRES_DB: ${TEST_POSTGRES_DB}
     env_file:
-      - .env.test
+      - path: ./backend/.env.test
+        required: true
     ports:
-      - "${TEST_POSTGRES_PORT}:5432"
+      - "5433:5432"
     volumes:
       - postgres_test_data:/var/lib/postgresql/data
 
