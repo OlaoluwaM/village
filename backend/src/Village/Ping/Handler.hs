@@ -25,4 +25,5 @@ pingHandler = ping :<|> ping
 ping :: (PingEff es) => Eff es Text
 ping = do
     let dbCheck = db (rawSql @(Single Int) "SELECT 1" []) $> "Ok"
+    -- TODO We probably should have a less transparent error for prod
     dbCheck `Eff.catchSync` (\err -> Eff.throwError $ err500{errBody = "Error " <> fromString (displayException err)})
