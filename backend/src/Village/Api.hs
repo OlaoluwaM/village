@@ -7,8 +7,8 @@ import Effectful (Eff, IOE)
 import Effectful.Error.Static (Error)
 import Effectful.Reader.Static (Reader)
 import Servant (
-    HasServer (ServerT),
     ServerError,
+    ServerT,
  )
 import Village.Configuration (AppCtx)
 import Village.Effects.DB (DB)

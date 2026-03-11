@@ -1,12 +1,12 @@
+{-# OPTIONS_GHC -Wno-missing-export-lists #-}
+
 module Village.Effects.Log where
 
-import Blammo.Logging qualified as Blammo
+import Blammo.Logging.Simple qualified as Blammo
+import Effectful.Dispatch.Dynamic qualified as Eff
 import Effectful.TH qualified as Eff
 
-import Blammo.Logging.Simple qualified as Blammo
-import Effectful (Eff, Effect, IOE, MonadIO (liftIO), (:>))
-import Effectful.Dispatch.Dynamic qualified as Eff
-import Effectful.Dispatch.Static qualified as Eff
+import Effectful (Eff, Effect, IOE, (:>))
 
 data Log :: Effect where
     LogInfo :: Blammo.Message -> Log m ()
