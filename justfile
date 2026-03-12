@@ -46,17 +46,20 @@ startup_db:
   sleep {{waitTime}}
   just deploy_db
 
+shutdown_db:
+  docker compose down -v db # Stops and removes the db container, -v is --volumes which removes the db data volume as well, effectively resetting the db to a clean slate
+
 deploy_db:
   just sqitch deploy --verify
 
 revert_db:
   just sqitch revert
 
+start_db:
+  docker compose start db # Just start the db container, if it's already running this will be a no-op
+
 stop_db:
   docker compose stop db # Just stop the db container
-
-shutdown_db:
-  docker compose down -v db # Stops and removes the db container, -v is --volumes which removes the db data volume as well, effectively resetting the db to a clean slate
 
 restart_db:
   docker compose restart db
@@ -81,17 +84,20 @@ startup_test_db:
   sleep {{waitTime}}
   just deploy_test_db
 
+shutdown_test_db:
+  docker compose down -v test_db
+
 deploy_test_db:
   just sqitch_test deploy --verify
 
 revert_test_db:
   just sqitch_test revert
 
+start_test_db:
+  docker compose start test_db # Just start the db container, if it's already running this will be a no-op
+
 stop_test_db:
   docker compose stop test_db
-
-shutdown_test_db:
-  docker compose down -v test_db
 
 restart_test_db:
   docker compose restart test_db
