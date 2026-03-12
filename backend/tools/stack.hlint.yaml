@@ -1,0 +1,6 @@
+resolver: lts-24.33
+
+packages: []
+
+extra-deps:
+  - hlint-3.10

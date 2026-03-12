@@ -1,12 +1,26 @@
-module Village.Api (villageApi) where
+-- To put together the API
+
+module Village.Api (ApiEff, Api, api, handler) where
 
 import Data.Proxy (Proxy (..))
+import Effectful (Eff, IOE)
+import Effectful.Error.Static (Error)
+import Effectful.Reader.Static (Reader)
+import Servant (
+    ServerError,
+    ServerT,
+ )
+import Village.Configuration (AppCtx)
+import Village.Effects.DB (DB)
+import Village.Effects.Log (Log)
+import Village.Ping.Handler (PingApi, pingHandler)
 
-import Network.Wai qualified
-import Servant (serve)
-import Village.Endpoints.Ping.Handler (PingAPI, pingServer)
+type ApiEff = Eff '[Log, Error ServerError, DB, Reader AppCtx, IOE]
 
-type VillageAPI = PingAPI
+type Api = PingApi
 
-villageApi :: Network.Wai.Application
-villageApi = serve (Proxy :: Proxy VillageAPI) pingServer
+api :: Proxy Api
+api = Proxy
+
+handler :: ServerT Api ApiEff
+handler = pingHandler

@@ -1,2 +1,6 @@
 .stack-work/
 *~
+.env
+!.env.example
+!.env.test
+!.env.dev
